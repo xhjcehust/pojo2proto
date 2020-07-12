@@ -1,0 +1,42 @@
+<idea-plugin>
+    <id>org.github.pojo2proto</id>
+    <name>pojo to proto</name>
+    <version>1.0.2-SNAPSHOT</version>
+    <vendor email="xhjcehust@qq.com" url="https://github.com/xhjcehust">xhjcehust</vendor>
+
+    <description><![CDATA[
+    <p>类文件-右键-PojoProto, 将简单Java类型转成proto message拷贝至剪贴板</p>
+    <p>a plugin covert java pojo to proto</p>
+    <p>This plugin generates google protobuf message from right click in a java pojo class file.
+    choose [PojoProto], The output proto code is copied to clipboard.</p>
+    <p>git: https://github.com/xhjcehust/pojo2proto</p>
+    <p>Support Java Scalar Value Types, List, Map and Class Types.</p>
+    ]]></description>
+
+    <change-notes><![CDATA[
+    <ul>
+      <li>1.0.0<br>
+         first version, support universal pojo type<br>
+      </li>
+      <li>1.0.1<br>
+         fix some description about this plugin<br>
+      </li>
+    </ul>
+    ]]>
+    </change-notes>
+
+    <idea-version since-build="183"/>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="Pojo2ProtoAction" class="com.xiaohengjin.Pojo2ProtoAction" text="Pojo2Proto" description="convert pojo to proto">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>
