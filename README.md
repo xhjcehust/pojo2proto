@@ -1,6 +1,6 @@
 # Pojo2proto
 
-a plugin to convert java pojo to proto in IntelliJ IDEA
+an idea plugin to convert java pojo to proto in IntelliJ IDEA
 
 This plugin generates google protobuf message from right click in a java pojo class file.
 
