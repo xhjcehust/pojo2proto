@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.CaseFormat;
 import com.intellij.openapi.ide.CopyPasteManager;
 import com.intellij.psi.PsiClass;
@@ -36,7 +37,6 @@ public class Pojo2ProtoCore {
 
     public void start() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        lines.add("syntax = \"proto3\";\n");
         for (PsiClass psiClass: classList) {
             go(psiClass);
         }
@@ -47,7 +47,15 @@ public class Pojo2ProtoCore {
         CopyPasteManager.getInstance().setContents(new StringSelection(protoContent));
     }
 
-    public void go(PsiClass clazz) {
+    private void go(PsiClass clazz) {
+        if(clazz.isEnum()) {
+            goEnum(clazz);
+        } else {
+            goClass(clazz);
+        }
+    }
+
+    private void goClass(PsiClass clazz) {
         String className = clazz.getName();
         List<String> protoContentList = new ArrayList<>();
         protoContentList.add("message " + convertClassName(className) + " {");
@@ -68,6 +76,38 @@ public class Pojo2ProtoCore {
         protoContentList.add("}\n\n");
         System.out.println(StringUtils.join(protoContentList, "\n"));
         lines.addAll(protoContentList);
+    }
+
+    private void goEnum(PsiClass clazz) {
+        String className = clazz.getName();
+        List<String> protoContentList = new ArrayList<>();
+        protoContentList.add("enum " + convertClassName(className) + " {");
+        PsiField[] fields = clazz.getFields();
+        int index = 0;
+        // As per protobuf convention - enums should have a NONE field.
+        protoContentList.add(getFieldNameForEnum(className, "NONE", index++));
+        for (PsiField field: fields) {
+            // Enum values are copied as-is
+            protoContentList.add(getFieldNameForEnum(className, field.getName(), index++));
+        }
+
+        protoContentList.add("}\n\n");
+        System.out.println(StringUtils.join(protoContentList, "\n"));
+        lines.addAll(protoContentList);
+    }
+
+    @VisibleForTesting
+    String getFieldNameForEnum(String enumName, String fieldName, int index){
+        enumName = CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, enumName);
+        if(!fieldName.toUpperCase().equals(fieldName)) {
+            // The field name is not in the prescribed UPPER_UNDERSCORE case, do convert.
+            fieldName = CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, fieldName);
+        }
+
+        String fieldStr = "\t";
+        fieldStr += enumName + "_" + fieldName;
+        fieldStr = String.format("%s = %d;", fieldStr, index);
+        return fieldStr;
     }
 
     private String getProtoType(PsiType type) {
