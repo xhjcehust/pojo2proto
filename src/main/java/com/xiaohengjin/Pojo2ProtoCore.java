@@ -48,7 +48,7 @@ public class Pojo2ProtoCore {
     }
 
     private void go(PsiClass clazz) {
-        if(clazz.isEnum()) {
+        if (clazz.isEnum()) {
             goEnum(clazz);
         } else {
             goClass(clazz);
@@ -86,7 +86,7 @@ public class Pojo2ProtoCore {
         int index = 0;
         // As per protobuf convention - enums should have a NONE field.
         protoContentList.add(getFieldNameForEnum(className, "NONE", index++));
-        for (PsiField field: fields) {
+        for (PsiField field : fields) {
             // Enum values are copied as-is
             protoContentList.add(getFieldNameForEnum(className, field.getName(), index++));
         }
@@ -97,9 +97,9 @@ public class Pojo2ProtoCore {
     }
 
     @VisibleForTesting
-    String getFieldNameForEnum(String enumName, String fieldName, int index){
+    String getFieldNameForEnum(String enumName, String fieldName, int index) {
         enumName = CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, enumName);
-        if(!fieldName.toUpperCase().equals(fieldName)) {
+        if (!fieldName.toUpperCase().equals(fieldName)) {
             // The field name is not in the prescribed UPPER_UNDERSCORE case, do convert.
             fieldName = CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, fieldName);
         }
