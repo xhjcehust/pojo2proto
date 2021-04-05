@@ -13,6 +13,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.CaseFormat;
 import com.intellij.openapi.ide.CopyPasteManager;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiEnumConstant;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
@@ -86,7 +87,11 @@ public class Pojo2ProtoCore {
         int index = 0;
         // As per protobuf convention - enums should have a NONE field.
         protoContentList.add(getFieldNameForEnum(className, "NONE", index++));
-        for (PsiField field : fields) {
+        for (PsiField field: fields) {
+            // filter enum value
+            if (!(field instanceof PsiEnumConstant)) {
+                continue;
+            }
             // Enum values are copied as-is
             protoContentList.add(getFieldNameForEnum(className, field.getName(), index++));
         }
