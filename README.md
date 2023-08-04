@@ -13,9 +13,9 @@ choose [PojoProto], The output proto code is copied to the clipboard.
 ## Update
 
 * 1.0.0 - First version, support universal pojo type
-* 1.0.1 - fix some description about this plugin
+* 1.0.1 - Fix some description about this plugin
 * 1.0.3 - Support for enums
-
+* 1.0.4 - Change uint to int
 
 ## Plugin
 
