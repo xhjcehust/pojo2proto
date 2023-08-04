@@ -131,9 +131,9 @@ public class Pojo2ProtoCore {
             }
 
             if (Long.class.getName().equals(className)) {
-                return "uint64";
+                return "int64";
             } else if (Integer.class.getName().equals(className)) {
-                return "uint32";
+                return "int32";
             } else if (String.class.getName().equals(className)) {
                 return "string";
             } else if (Double.class.getName().equals(className)) {
@@ -145,11 +145,11 @@ public class Pojo2ProtoCore {
             }
             return convertClassName(type.getPresentableText());
         } else if (PsiPrimitiveType.LONG.equals(type)) {
-            return "uint64";
+            return "int64";
         } else if (PsiPrimitiveType.INT.equals(type)) {
-            return "uint32";
+            return "int32";
         } else if (PsiPrimitiveType.SHORT.equals(type)) {
-            return "uint32";
+            return "int32";
         } else if (PsiPrimitiveType.DOUBLE.equals(type)) {
             return "double";
         } else if (PsiPrimitiveType.FLOAT.equals(type)) {

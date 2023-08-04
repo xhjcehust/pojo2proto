@@ -21,6 +21,12 @@
       <li>1.0.1<br>
          fix some description about this plugin<br>
       </li>
+      <li>1.0.3<br>
+         support for enums<br>
+      </li>
+      <li>1.0.4<br>
+         change uint to int<br>
+      </li>
     </ul>
     ]]>
     </change-notes>

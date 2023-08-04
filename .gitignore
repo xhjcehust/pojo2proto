@@ -7,3 +7,4 @@ logs
 /gradle
 gradle.properties
 .gitconfig
+src/test/.idea

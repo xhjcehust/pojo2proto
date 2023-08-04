@@ -1,0 +1,11 @@
+message Demo {
+	int32 var1 = 1;
+	int32 var2 = 2;
+	int64 var3 = 3;
+	int64 var4 = 4;
+	string var5 = 5;
+	repeated int32 var6 = 6;
+	map<int64, string> var7 = 7;
+	Demo var8 = 8;
+}
+
